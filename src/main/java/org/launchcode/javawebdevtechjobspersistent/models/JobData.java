@@ -1,6 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // This is a change made in sandbox.
 
@@ -46,12 +47,19 @@ public class JobData {
     }
 
     public static String getFieldValue(Job job, String fieldName){
-        String theValue;
+        String theValue="";
         if (fieldName.equals("name")){
             theValue = job.getName();
         } else if (fieldName.equals("employer")){
             theValue = job.getEmployer().toString();
-        } else {
+        }else if (fieldName.equalsIgnoreCase("skill"))
+        {
+            List<Skill> jobSkills = job.getSkills();
+            for (Skill aSkill: jobSkills) {
+                theValue += aSkill.getName();
+            }
+        }
+        else {
             theValue = job.toString();
         }
 
@@ -74,7 +82,7 @@ public class JobData {
 
             if (job.getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getEmployer().toLowerCase().contains(value.toLowerCase())) {
+            } else if (job.getEmployer().getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
             } else if (job.getSkills().contains(value.toLowerCase())) {
                 results.add(job);
